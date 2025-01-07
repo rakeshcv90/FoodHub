@@ -1,6 +1,8 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services' // <- Add this line
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
 
 /**
@@ -78,9 +80,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.foodhub"
+    namespace "com.fooddelivery.dining.restaurants.eats.ecatering.domino.burger.pizza.eatclub.foodcourt"
     defaultConfig {
-        applicationId "com.foodhub"
+        applicationId "com.fooddelivery.dining.restaurants.eats.ecatering.domino.burger.pizza.eatclub.foodcourt"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

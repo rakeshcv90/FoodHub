@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "775365973562",
+    "project_id": "foodhub-70d2d",
+    "storage_bucket": "foodhub-70d2d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775365973562:android:cf3aa9d5fe6591dd64c703",
+        "android_client_info": {
+          "package_name": "com.fooddelivery.dining.restaurants.eats.ecatering.domino.burger.pizza.eatclub.foodcourt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfV7pXgHz70zPk0Ni5AeJ46oeDUsigb3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
