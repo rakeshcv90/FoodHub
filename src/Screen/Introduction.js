@@ -29,15 +29,15 @@ const data = [
   },
   {
     id: 2,
-    title: 'Order from choosen chef',
-    desc: `get all your loved foods in one once place you just place the order we do the rest`,
+    title: 'Order from chosen chef',
+    desc: `Order directly from chefs who inspire your cravings.`,
     light: IMAGES.Intro2Light,
     // dark: IMAGES.Intro2Dark,
   },
   {
     id: 3,
     title: 'Free delivery offer',
-    desc: `get all your loved foods in one once place you just place the order we do the rest`,
+    desc: `Taste the joy with zero delivery charges!`,
     light: IMAGES.Intro3Light,
     // dark: IMAGES.Intro3Dark,
   },

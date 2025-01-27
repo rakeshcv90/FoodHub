@@ -13,7 +13,7 @@ const {SCREEN_HEIGHT, SCREEN_WIDTH} = DIMENSIONS;
 const Search = () => {
   return (
     <TouchableOpacity
-      onPress={() => (buttonType ? navigate('SearchScreen') : {})}
+      // onPress={() => (buttonType ? navigate('SearchScreen') : {})}
       style={[
         styles.container,
         {width: SCREEN_WIDTH * 0.9, paddingVertical: 6},
@@ -21,7 +21,7 @@ const Search = () => {
       <AppIcon name="search1" size={25} type="AntDesign" color="black" />
 
       <TextInput
-        placeholder="Search dishes,  restaurabts"
+        placeholder="Search dishes,  restaurants"
         placeholderTextColor={COLORS.BLACK}
         cursorColor={COLORS.LIGHT_GREY}
         // value={value}

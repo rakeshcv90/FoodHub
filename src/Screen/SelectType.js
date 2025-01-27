@@ -9,11 +9,16 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import AppIcon from '../Components/Utilities/AppIcon';
-import {COLORS} from '../constants';
-import {goBack, navigate} from '../Components/Utilities/Functions/NavigationUtil';
-
-const SelectType = () => {
+import {COLORS, DIMENSIONS} from '../constants';
+import {
+  goBack,
+  navigate,
+} from '../Components/Utilities/Functions/NavigationUtil';
+import {CommonActions} from '@react-navigation/native';
+const SelectType = ({navigation}) => {
   const [select, setSelect] = useState(0);
+  const {SCREEN_HEIGHT, SCREEN_WIDTH} = DIMENSIONS;
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -22,37 +27,14 @@ const SelectType = () => {
         translucent={false}
         backgroundColor="white"
       />
-      <View style={styles.header}>
-        <View style={styles.subHeader1}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => goBack()}
-            style={{
-              width: 35,
-              height: 35,
-              borderRadius: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
-              // opacity: 0.3,
-              backgroundColor: COLORS.GRAYNEW2,
-            }}>
-            <AppIcon
-              name="arrow-back-ios"
-              size={15}
-              type="MaterialIcons"
-              color="black"
-            />
-          </TouchableOpacity>
-          <View
-            style={{
-              width: '80%',
-              justifyContent: 'center',
-              //   alignItems: 'center',
-              marginHorizontal: 10,
-            }}></View>
-        </View>
-      </View>
-      <View style={{width: '95%', height: '30%', alignItems: 'center'}}>
+
+      <View
+        style={{
+          width: '95%',
+          height: '25%',
+          alignItems: 'center',
+          marginVertical: 40,
+        }}>
         <Text
           style={{
             color: 'white',
@@ -79,13 +61,15 @@ const SelectType = () => {
       <View
         style={{
           width: '99%',
-          height: '70%',
+          height: '80%',
           alignSelf: 'center',
           alignItems: 'center',
           backgroundColor: 'white',
           borderTopLeftRadius: 25,
           borderTopRightRadius: 25,
+         paddingTop:SCREEN_HEIGHT*0.1
         }}>
+      
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => {
@@ -94,11 +78,11 @@ const SelectType = () => {
           style={{
             width: '95%',
             height: 60,
-            marginTop: 50,
-            backgroundColor: '#F6F8FA',
             borderRadius: 8,
-            alignItems: 'center',
             flexDirection: 'row',
+            marginTop: 30,
+            alignItems: 'center',
+            backgroundColor: '#F6F8FA',
             borderWidth: select == 1 ? 1 : 0,
             borderColor: select == 1 ? COLORS.GREEN : COLORS.WHITE,
           }}>
@@ -106,16 +90,17 @@ const SelectType = () => {
             style={{
               width: 50,
               height: 50,
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginHorizontal: 15,
+              backgroundColor: 'red',
+              marginHorizontal: 20,
               backgroundColor: '#FFEDB7',
               borderRadius: 25,
+              alignItems: 'center',
+              justifyContent: 'center',
             }}>
             <AppIcon
-              name="user-large"
-              size={25}
-              type="FontAwesome6"
+              name="chef-hat"
+              size={30}
+              type="MaterialCommunityIcons"
               color={COLORS.GREEN}
             />
           </View>
@@ -125,9 +110,9 @@ const SelectType = () => {
                 fontSize: 18,
                 fontWeight: '900',
                 color: 'black',
-                top: -5,
+                top: -2,
               }}>
-              I'm a Customer
+            I'm a Customer
             </Text>
             <Text
               style={{
@@ -136,14 +121,14 @@ const SelectType = () => {
                 color: '#7C7F8B',
                 top: 5,
               }}>
-              Order food and enjoy fast delivery!
+             Order food and enjoy fast delivery!
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => {
-            SelectType(2);
+            setSelect(2);
           }}
           style={{
             width: '95%',
@@ -181,7 +166,7 @@ const SelectType = () => {
                 fontSize: 18,
                 fontWeight: '900',
                 color: 'black',
-                top: -5,
+                top: -2,
               }}>
               I'm a Driver
             </Text>
@@ -195,7 +180,7 @@ const SelectType = () => {
               Deliver food and earn money!
             </Text>
           </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => {
@@ -236,7 +221,7 @@ const SelectType = () => {
                 fontSize: 18,
                 fontWeight: '900',
                 color: 'black',
-                top: -5,
+                top: -2,
               }}>
               I'm a Chef
             </Text>
@@ -256,16 +241,30 @@ const SelectType = () => {
             width: '90%',
             height: '10%',
             alignItems: 'center',
-            marginTop: 80,
+            marginTop: SCREEN_WIDTH >= 391 ? 80 : 20,
           }}>
           <TouchableOpacity
             style={styles.locationButton}
             activeOpacity={0.8}
             onPress={() => {
               if (select == 1) {
-                   navigate('Home');
+                navigation.dispatch(
+                  CommonActions.reset({
+                    index: 0,
+                    routes: [{name: 'Home'}],
+                  }),
+                );
+                // navigation.navigate('replace', { screen: 'Home' });
               } else if (select == 2) {
+                Alert.alert('Work in progress');
               } else if (select == 3) {
+                // navigate('ChefHome');
+                navigation.dispatch(
+                  CommonActions.reset({
+                    index: 0,
+                    routes: [{name: 'ChefHome'}],
+                  }),
+                );
               } else {
                 Alert.alert('Please Select atleast one');
               }

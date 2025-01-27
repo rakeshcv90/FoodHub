@@ -94,10 +94,11 @@ const AllCategories = () => {
           value={item.title}
           color={COLORS.BLACK}
           w={'100%'}
-          fontSize={16}
-          fontWeight="500"
+          fontSize={14}
+          fontWeight="400"
           textAlign="center"
           marginTop={10}
+          
         />
       </TouchableOpacity>
     );
@@ -129,6 +130,7 @@ const AllCategories = () => {
               size={15}
               type="MaterialIcons"
               color="black"
+              style={{left:2}}
             />
           </TouchableOpacity>
           <View

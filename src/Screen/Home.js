@@ -27,7 +27,7 @@ import useCordinates from '../Components/Hooks/useCordinates';
 import API_CALLS from '../api/apiCalls';
 import {dispatch} from '../constants/DIMENSIONS';
 import ACTIONS from '../redux/actions';
-import { useNavigationState } from '@react-navigation/native';
+import {useNavigationState} from '@react-navigation/native';
 // const data = [
 //   {
 //     id: 1,
@@ -128,8 +128,9 @@ const restaurants = [
 ];
 const Home = ({navigation}) => {
   const currentRouteName = useNavigationState(
-    (state) => state.routes[state.index].name
+    state => state.routes[state.index].name,
   );
+  const hasLocation = useSelector(state => state.hasLocation);
   const [lastBackPress, setLastBackPress] = useState(0);
   const {SCREEN_HEIGHT, SCREEN_WIDTH} = DIMENSIONS;
   const getCart = useSelector(state => state?.getCart);
@@ -141,7 +142,7 @@ const Home = ({navigation}) => {
     // Reset the navigation stack and navigate to the initial screen
     navigation.reset({
       index: 0,
-      routes: [{ name: 'SplaceScreen' }], // Replace 'Home' with your initial route name
+      routes: [{name: 'SplaceScreen'}], // Replace 'Home' with your initial route name
     });
 
     // Exit the app
@@ -177,7 +178,7 @@ const Home = ({navigation}) => {
 
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
-      backAction
+      backAction,
     );
 
     return () => backHandler.remove();
@@ -227,8 +228,8 @@ const Home = ({navigation}) => {
           value={item.title}
           color={COLORS.BLACK}
           w={'100%'}
-          fontSize={16}
-          fontWeight="500"
+          fontSize={14}
+          fontWeight="400"
           textAlign="center"
           marginTop={10}
         />
@@ -277,7 +278,7 @@ const Home = ({navigation}) => {
           color={COLORS.GRAYNEW1}
           w={'100%'}
           marginTop={15}
-          fontSize={18}
+          fontSize={15}
         />
         <AppText
           type="normal"
@@ -355,6 +356,18 @@ const Home = ({navigation}) => {
     dispatch(ACTIONS.setCustomerAddress(fullAddress));
     // setAddress(fullAddress);
   };
+  const getGreeting = () => {
+    const hours = new Date().getHours();
+    if (hours < 12) {
+      return 'Good Morning';
+    } else if (hours < 18) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  };
+  
+  
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -403,6 +416,7 @@ const Home = ({navigation}) => {
                 numberOfLines={1}
                 style={{fontSize: 12, fontWeight: '500', width: '60%'}}>
                 {getCustomerAddress}
+            
               </Text>
               <AppIcon
                 name="caretdown"
@@ -436,16 +450,16 @@ const Home = ({navigation}) => {
             <View
               style={{
                 position: 'absolute',
-                top: 0,
-                right: 0,
-                width: 25,
-                height: 25,
-                borderRadius: 25,
+                top:-2,
+                right: -5,
+                width: 20,
+                height: 20,
+                borderRadius: 20,
                 backgroundColor: COLORS.GREEN,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Text style={{color: 'white', fontSize: 13, fontWeight: '500'}}>
+              <Text style={{color: 'white', fontSize: 12, fontWeight: '500'}}>
                 {getCart?.length}
               </Text>
             </View>
@@ -470,7 +484,7 @@ const Home = ({navigation}) => {
 
               color: COLORS.BLACK,
             }}>
-            Hey Halal,{' '}
+            Hey David,{' '}
             <Text
               style={{
                 fontSize: 16,
@@ -478,7 +492,7 @@ const Home = ({navigation}) => {
                 fontWeight: 'bold',
                 color: COLORS.BLACK,
               }}>
-              Good Afternoon!
+             {getGreeting()}!
             </Text>
           </Text>
         </View>
@@ -520,7 +534,7 @@ const Home = ({navigation}) => {
             flexDirection: 'row',
           }}>
           <View style={[styles.subHeader1, {width: '70%', height: 30}]}>
-            <Text style={{fontSize: 18, color: COLORS.GRAYNEW}}>
+            <Text style={{fontSize: 18, color: COLORS.BLACK ,fontWeight:'700'}}>
               All Categories
             </Text>
           </View>
@@ -533,7 +547,7 @@ const Home = ({navigation}) => {
               alignItems: 'center',
               justifyContent: 'flex-end',
             }}>
-            <Text style={{fontSize: 15, color: COLORS.GRAYNEW}}>See All </Text>
+            <Text style={{fontSize: 14, color: COLORS.GRAYNEW}}>See All </Text>
             <AppIcon
               name="right"
               size={15}
@@ -562,8 +576,8 @@ const Home = ({navigation}) => {
             flexDirection: 'row',
           }}>
           <View style={[styles.subHeader1, {width: '70%', height: 30}]}>
-            <Text style={{fontSize: 18, color: COLORS.GRAYNEW}}>
-              Open Rrestaurants
+            <Text style={{fontSize: 18, color: COLORS.BLACK ,fontWeight:'700'}}>
+              Open Restaurants
             </Text>
           </View>
           <TouchableOpacity
@@ -575,7 +589,7 @@ const Home = ({navigation}) => {
               alignItems: 'center',
               justifyContent: 'flex-end',
             }}>
-            <Text style={{fontSize: 15, color: COLORS.GRAYNEW}}>See All </Text>
+            <Text style={{fontSize: 14, color: COLORS.GRAYNEW}}>See All </Text>
             <AppIcon
               name="right"
               size={15}

@@ -16,6 +16,12 @@ import Address from '../Screen/Address';
 import MyAddress from '../Screen/MyAddress';
 import Payment from '../Screen/Payment';
 import SelectType from '../Screen/SelectType';
+import ChefHome from '../Screen/Chef/ChefHome';
+import RiderDetails from '../Screen/Chef/RiderDetails';
+import OrderDelivered from '../Screen/Chef/OrderDelivered';
+import MyOrder from '../Screen/MyOrder';
+import OrderPlaced from '../Screen/OrderPlaced';
+import OrderTrack from '../Screen/OrderTrack';
 
 const Stack = createStackNavigator();
 const Router = () => {
@@ -38,6 +44,12 @@ const Router = () => {
       <Stack.Screen name="MyAddress" component={MyAddress} />
       <Stack.Screen name="Payment" component={Payment} />
       <Stack.Screen name="SelectType" component={SelectType} />
+      <Stack.Screen name="ChefHome" component={ChefHome} />
+      <Stack.Screen name="RiderDetails" component={RiderDetails} />
+      <Stack.Screen name="OrderDelivered" component={OrderDelivered} />
+      <Stack.Screen name="MyOrder" component={MyOrder} />
+      <Stack.Screen name="OrderPlaced" component={OrderPlaced} />
+      <Stack.Screen name="OrderTrack" component={OrderTrack} />
     </Stack.Navigator>
   );
 };

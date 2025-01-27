@@ -120,6 +120,8 @@ const ItemScreen = ({route}) => {
               width: 150,
               height: 120,
               borderRadius: 10,
+              alignItems: 'center',
+              alignSelf:'center'
             }}
             resizeMode="stretch"
           />
@@ -127,8 +129,8 @@ const ItemScreen = ({route}) => {
             type="normal"
             value={item.title}
             color={COLORS.BLACK}
-            fontSize={16}
-            fontWeight="500"
+            fontSize={14}
+            fontWeight="400"
             marginTop={10}
           />
 
@@ -136,7 +138,7 @@ const ItemScreen = ({route}) => {
             type="normal"
             value={`₹${item.price}`}
             color={COLORS.BLACK}
-            fontSize={14}
+            fontSize={12}
             marginHorizontal={5}
             fontWeight="400"
             marginTop={5}
@@ -186,6 +188,7 @@ const ItemScreen = ({route}) => {
               size={15}
               type="MaterialIcons"
               color="black"
+              style={{left:2}}
             />
           </TouchableOpacity>
           <View

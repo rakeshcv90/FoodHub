@@ -122,6 +122,7 @@ const ShowCart = () => {
               size={15}
               type="MaterialIcons"
               color="black"
+              style={{left:2}}
             />
           </TouchableOpacity>
           <View

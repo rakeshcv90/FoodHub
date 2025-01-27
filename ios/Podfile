@@ -32,7 +32,10 @@ target 'FoodHub' do
       'ios'
     ]
   end
+# React Native Maps dependencies
 
+rn_maps_path = '../node_modules/react-native-maps'
+pod 'react-native-google-maps', :path => rn_maps_path
   config = use_native_modules!(config_command)
 
   use_react_native!(
@@ -40,7 +43,8 @@ target 'FoodHub' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
-
+  use_frameworks! :linkage => :static 
+  $RNFirebaseAsStaticFramework = true
   target 'FoodHubTests' do
     inherit! :complete
     # Pods for testing
@@ -54,5 +58,14 @@ target 'FoodHub' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+    installer.pods_project.targets.each do |target|
+      # Prevent duplicate copy commands
+      target.build_configurations.each do |config|
+        if target.name.start_with?('ReactCommon', 'React-Fabric', 'React-FabricComponents')
+          config.build_settings['EXCLUDED_SOURCE_FILE_NAMES'] = 'CallbackWrapper.h conversions.h LongLivedObject.h primitives.h propsConversions.h RCTComponentViewHelpers.h CallbackWrapper.h LongLivedObject.h conversions.h primitives.h propsConversions.h RCTComponentViewHelpers.h conversions.h primitives.h'
+        end
+      end
+    end
   end
+
 end

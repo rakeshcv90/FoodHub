@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   goBack,
   navigate,
@@ -19,14 +19,20 @@ import AppText from '../Components/Utilities/AppText';
 import AppButton from '../Components/Utilities/AppButton';
 import ACTIONS from '../redux/actions';
 import {dispatch} from '../constants/DIMENSIONS';
+import LottieView from 'lottie-react-native';
 
 const Address = () => {
   const getMyAddress = useSelector(state => state?.getMyAddress);
   const getMyDefaultAddress = useSelector(state => state?.getMyDefaultAddress);
   const {SCREEN_HEIGHT, SCREEN_WIDTH} = DIMENSIONS;
+  const animationRef = useRef(null);
+  useEffect(() => {
+    animationRef.current?.play();
 
+    // Or set a specific startFrame and endFrame with:
+    animationRef.current?.play(30, 120);
+  }, []);
   const renderItem = ({item, index}) => {
- 
     return (
       <TouchableOpacity
         onPress={() => dispatch(ACTIONS.setMyDefaultAddress(index))}
@@ -146,6 +152,7 @@ const Address = () => {
               size={15}
               type="MaterialIcons"
               color="black"
+              style={{left: 2}}
             />
           </TouchableOpacity>
           <View
@@ -166,20 +173,37 @@ const Address = () => {
           </View>
         </View>
       </View>
-      <View style={{width: '95%', flex: 1}}>
-        <FlatList
-          data={getMyAddress}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(_, index) => index.toString()}
-          pagingEnabled
-          renderItem={renderItem}
-          contentContainerStyle={{
+      {getMyAddress?.length > 0 ? (
+        <View style={{width: '95%', flex: 1}}>
+          <FlatList
+            data={getMyAddress}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(_, index) => index.toString()}
+            pagingEnabled
+            renderItem={renderItem}
+            contentContainerStyle={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              // paddingBottom: 50,
+            }}
+          />
+        </View>
+      ) : (
+        <View
+          style={{
+            width: '95%',
+            flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            // paddingBottom: 50,
-          }}
-        />
-      </View>
+          }}>
+          <LottieView
+            source={require('../assets/addresnotfound.json')}
+            autoPlay
+            loop
+            style={{width: 200, height: 200}}
+          />
+        </View>
+      )}
       <AppButton
         onPress={() => {
           navigate('MyAddress');

@@ -48,9 +48,9 @@ const LocationPermission = () => {
     const permission = await checkLocationPermission();
     if (permission == 'granted') {
       setOpen(false);
-      setResetCurrent(true);
+      // setResetCurrent(true);
       // navigate('Home');
-       navigate('SelectType');
+      navigate('SelectType');
       dispatch(ACTIONS.setHasLocation(true));
     } else setOpen(true);
   };
@@ -59,19 +59,19 @@ const LocationPermission = () => {
     const permission = await askLocationPermission();
     if (permission == 'granted') {
       setOpen(false);
-      setResetCurrent(true);
+      // setResetCurrent(true);
       // navigate('Home');
-       navigate('SelectType');
+      navigate('SelectType');
       dispatch(ACTIONS.setHasLocation(true));
     
     } else if (permission == 'denied') openSettings();
     else setOpen(true);
   };
-  useCordinates({
-    getAgain: resetCurrent,
-    resetGetAgain: setResetCurrent,
-    setCoordinates: setNewCurrent,
-  });
+  // useCordinates({
+  //   getAgain: resetCurrent,
+  //   resetGetAgain: setResetCurrent,
+  //   setCoordinates: setNewCurrent,
+  // });
 
   return (
     <View style={styles.container}>
@@ -98,7 +98,7 @@ const LocationPermission = () => {
       </TouchableOpacity>
 
       <Text style={styles.descriptionText}>
-        FOODHUB WILL ACCESS YOUR LOCATION{'\n'}ONLY WHILE USING THE APP
+      {`Foodvalley will access your location\nonly while using the app`}
       </Text>
     </View>
   );

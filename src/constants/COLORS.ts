@@ -17,5 +17,6 @@ export const COLORS = {
   GRAYNEW:'#7f8086',
   GRAYNEW1:'#525562',
   GRAYNEW2 :'#ecf0f4',
-  GRAYNEW3 :'#f6f8fa'
+  GRAYNEW3 :'#f6f8fa',
+  CHECKBOXCOLOR: '#ADA4A5',
 };

@@ -12,9 +12,9 @@ import {COLORS} from '../constants';
 import AppIcon from '../Components/Utilities/AppIcon';
 import IMAGES from '../Components/IMAGES';
 import AppButton from '../Components/Utilities/AppButton';
-import { dispatch } from '../constants/DIMENSIONS';
+import {dispatch} from '../constants/DIMENSIONS';
 import ACTIONS from '../redux/actions';
-import { goBack } from '../Components/Utilities/Functions/NavigationUtil';
+import {goBack} from '../Components/Utilities/Functions/NavigationUtil';
 
 const Payment = ({route}) => {
   const fromCheckoutScreen = route?.params?.fromCheckoutScreen;
@@ -56,7 +56,6 @@ const Payment = ({route}) => {
               borderRadius: 20,
               justifyContent: 'center',
               alignItems: 'center',
-
               backgroundColor: COLORS.GRAYNEW2,
             }}>
             <AppIcon
@@ -89,7 +88,7 @@ const Payment = ({route}) => {
           style={{
             width: '65%',
             alignItems: 'center',
-            backgroundColor: 'lightgray',
+         
             borderRadius: 10,
             padding: 10,
             marginVertical: 10,
@@ -105,7 +104,8 @@ const Payment = ({route}) => {
                   {
                     borderWidth: 1,
                     borderColor: isSelected ? COLORS.GREEN : COLORS.WHITE,
-                    backgroundColor: COLORS.WHITE,
+
+                    backgroundColor: COLORS.GRAYNEW2,
                     flexDirection: 'row',
                   },
                 ]}>
@@ -120,7 +120,7 @@ const Payment = ({route}) => {
                   name="check"
                   size={20}
                   type="MaterialCommunityIcons"
-                  color={isSelected ? COLORS.PRIMARY_APP_COLOR : COLORS.WHITE}
+                  color={isSelected ? COLORS.GREEN : COLORS.BLACK}
                 />
               </TouchableOpacity>
             );
@@ -129,9 +129,8 @@ const Payment = ({route}) => {
         <View style={{position: 'absolute', bottom: 0}}>
           <AppButton
             onPress={() => {
-                dispatch(ACTIONS.setPaymentType(Types[selected - 1]));
-                goBack();
-
+              dispatch(ACTIONS.setPaymentType(Types[selected - 1]));
+              goBack();
             }}
             buttonProps={{activeOpacity: 0.7}}
             titleText="DONE"

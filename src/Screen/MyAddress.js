@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  TextInput,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {goBack} from '../Components/Utilities/Functions/NavigationUtil';
@@ -18,7 +19,7 @@ import {
 } from '../Components/Utilities/styles/customMapStyle';
 import useCordinates from '../Components/Hooks/useCordinates';
 import AppText from '../Components/Utilities/AppText';
-import {TextInput} from 'react-native-paper';
+// import {TextInput} from 'react-native-paper';
 import AppButton from '../Components/Utilities/AppButton';
 import {useSelector} from 'react-redux';
 import {dispatch} from '../constants/DIMENSIONS';
@@ -81,6 +82,7 @@ const MyAddress = () => {
       const currentAddresses = getMyAddress;
       // const updatedAddresses = [...currentAddresses, newAddress];
       dispatch(ACTIONS.setMyAddress([...getMyAddress, newAddress]));
+      goBack()
       setAddress('');
       setLandmark('');
       setpin('');
@@ -114,6 +116,7 @@ const MyAddress = () => {
               size={15}
               type="MaterialIcons"
               color="white"
+              style={{left:2}}
             />
           </TouchableOpacity>
           <View
@@ -202,7 +205,7 @@ const MyAddress = () => {
             type="FontAwesome5"
             color="GRAY"
           />
-          <TextInput
+          {/* <TextInput
             underlineColor="transparent"
             placeholder="House Number / Area / Section / Locality"
             placeholderTextColor={COLORS.GRAYNEW}
@@ -224,6 +227,31 @@ const MyAddress = () => {
             underlineColorAndroid="transparent"
             value={address}
             onChangeText={text => setAddress(text)}
+          /> */}
+          <TextInput
+            underlineColor="transparent"
+            placeholder="House Number / Area / Section / Locality"
+            placeholderTextColor={COLORS.GRAYNEW}
+            editable={true}
+            focusable={true}
+            style={{
+              width: '100%', // Ensure it takes full width
+              height: 40,
+              backgroundColor: 'transparent', // Transparent background
+              color: 'black', // Ensure text is visible
+            }}
+            theme={{
+              colors: {
+                background: 'transparent',
+                text: 'black',
+                placeholder: COLORS.GRAYNEW,
+                primary: 'transparent',
+              },
+            }}
+            underlineColorAndroid="transparent" // Prevent underline on Android
+            value={address}
+            onChangeText={text => setAddress(text)}
+            textAlignVertical="top" // Ensure proper alignment
           />
         </View>
         <AppText

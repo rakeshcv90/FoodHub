@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 import {
@@ -19,6 +20,8 @@ import {useSelector} from 'react-redux';
 import useQuery, {TABLES} from '../Components/Hooks/useQuery';
 import useCordinates from '../Components/Hooks/useCordinates';
 import {indiaIntialRegion} from '../Components/Utilities/styles/customMapStyle';
+import {dispatch} from '../constants/DIMENSIONS';
+import ACTIONS from '../redux/actions';
 
 const Checkout = ({route}) => {
   const amount = route.params?.amount;
@@ -28,10 +31,11 @@ const Checkout = ({route}) => {
   const paymentType = useSelector(state => state?.paymentType);
   const [subtotal] = useState(200); // Static for demo
   const {getDBdata, getConstantDBdata, postDBdata} = useQuery();
+  const [loading, setLoading] = useState(false);
   const shippingCost = 8.0;
   const tax = 0.0;
   const total = subtotal + shippingCost + tax;
-  const [resetCurrent, setResetCurrent] = useState(false);
+  const [resetCurrent, setResetCurrent] = useState(true);
   const [newCurrent, setNewCurrent] = useState(indiaIntialRegion);
   useCordinates({
     getAgain: resetCurrent,
@@ -39,6 +43,8 @@ const Checkout = ({route}) => {
     setCoordinates: setNewCurrent,
   });
   const handlePlaceOrder = async () => {
+    setLoading(true);
+
     if (
       !paymentType?.name ||
       !getMyAddress[getMyDefaultAddress] ||
@@ -54,7 +60,7 @@ const Checkout = ({route}) => {
       return;
     } else {
       const data = {
-        customerAddress: "Uttam nagar",
+        customerAddress: 'GURUGRAM',
         customerCoordinates: {
           latitude: newCurrent?.latitude,
           longitude: newCurrent?.longitude,
@@ -63,8 +69,8 @@ const Checkout = ({route}) => {
         RestaurantsName: 'Test Restaurant',
         customerNumber: 9876543210,
         destinationCoordinates: {
-          latitude: RideAddressDetails.destination.latitude,
-          longitude: RideAddressDetails.destination.longitude,
+          latitude: newCurrent?.latitude,
+          longitude: newCurrent?.longitude,
         },
         destinationAddress: 'Test Address For Restaurant',
         price: amount,
@@ -75,13 +81,13 @@ const Checkout = ({route}) => {
       postDBdata(TABLES.BOOKINGS, data).then(data => {
         console.log('sdfdsfsdfd33333', data);
       });
-
-      // getdata();
-
-      // Alert.alert('Success', 'Order placed successfully');
+      setTimeout(() => {
+        setLoading(false);
+        navigate('OrderPlaced');
+      }, 2000);
     }
-    // navigate('OrderComplete');
   };
+
   // const getdata = async () => {
   //   getConstantDBdata(TABLES.BOOKINGS, data => {
   //     console.log('Placing order', data);
@@ -114,6 +120,7 @@ const Checkout = ({route}) => {
               size={15}
               type="MaterialIcons"
               color="black"
+              style={{left: 2}}
             />
           </TouchableOpacity>
           <View
@@ -134,33 +141,50 @@ const Checkout = ({route}) => {
           </View>
         </View>
       </View>
+      <View
+        style={{
+          width: '100%',
+          height: 100,
+          position: 'absolute',
+          top: 300,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+
+          zIndex: 1,
+        }}>
+        {loading && <ActivityIndicator size="large" color="#000000" />}
+      </View>
+
       <View style={styles.section}>
         <View style={{padding: 15}}>
           <Text style={styles.sectionTitle}>Shipping Address</Text>
-          <Text style={{color: COLORS.WHITE, fontWeight: '400', fontSize: 17}}>
-            {' '}
+          <Text style={{color: COLORS.BLACK, fontWeight: '400', fontSize: 17,marginHorizontal:10}}>
+            
             {getMyAddress[getMyDefaultAddress]?.type}
           </Text>
-          <Text style={{color: COLORS.WHITE, fontWeight: '400', fontSize: 17}}>
-            {getMyAddress[getMyDefaultAddress]?.address}{' '}
+          <Text style={{color: COLORS.BLACK, fontWeight: '400', fontSize: 17,marginHorizontal:13}}>
+            {getMyAddress[getMyDefaultAddress]?.address}
             {getMyAddress[getMyDefaultAddress]?.pin}
           </Text>
         </View>
         <TouchableOpacity
           onPress={() => {
-            navigate('MyAddress');
+            navigate('Address');
           }}>
           <AppIcon
             name="chevron-right"
             size={30}
             type="MaterialIcons"
-            color="white"
+            color="black"
+            style={{right:15}}
           />
         </TouchableOpacity>
       </View>
       <TouchableOpacity
         style={styles.section}
-        onPress={() => navigate('Payment', {fromCheckoutScreen: true})}>
+        // onPress={() => navigate('Payment', {fromCheckoutScreen: true})}
+      >
         <View style={{padding: 15}}>
           <Text style={styles.sectionTitle}>Payment Method</Text>
           {paymentType?.name == '' ? (
@@ -169,11 +193,11 @@ const Checkout = ({route}) => {
               Add Payment
             </Text>
           ) : (
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center',marginHorizontal:10}}>
               <Text
                 style={{
                   marginRight: 10,
-                  color: COLORS.WHITE,
+                  color: COLORS.BLACK,
                   fontWeight: '500',
                 }}>
                 {paymentType?.name}
@@ -186,13 +210,16 @@ const Checkout = ({route}) => {
             </View>
           )}
         </View>
-
-        <AppIcon
-          name="chevron-right"
-          size={30}
-          type="MaterialIcons"
-          color="white"
-        />
+        <TouchableOpacity
+          onPress={() => navigate('Payment', {fromCheckoutScreen: true})}>
+          <AppIcon
+            name="chevron-right"
+            size={30}
+            type="MaterialIcons"
+            color="black"
+            style={{right:5}}
+          />
+        </TouchableOpacity>
       </TouchableOpacity>
       <View
         style={{
@@ -225,7 +252,9 @@ const Checkout = ({route}) => {
       </View>
       <TouchableOpacity
         style={styles.checkoutButton}
-        onPress={handlePlaceOrder}>
+        onPress={() => {
+          handlePlaceOrder();
+        }}>
         <Text style={styles.selectedSizeButtonText}>₹{amount}</Text>
         <Text style={styles.selectedSizeButtonText}>Place order</Text>
       </TouchableOpacity>
@@ -256,10 +285,14 @@ const styles = StyleSheet.create({
   },
   section: {
     marginVertical: 10,
-    backgroundColor: COLORS.GREEN,
+    backgroundColor: COLORS.GRAYNEW2,
     borderRadius: 14,
     flexDirection: 'row',
-
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 1,
     width: '95%',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -268,7 +301,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     marginBottom: 10,
-    color: COLORS.GREY,
+    color: COLORS.BLACK,
     padding: 12,
   },
   summaryContainer: {marginVertical: 20},

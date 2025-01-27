@@ -7,14 +7,21 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ToastAndroid,
 } from 'react-native';
 import React from 'react';
-import {goBack, navigate} from '../Components/Utilities/Functions/NavigationUtil';
+import {
+  goBack,
+  navigate,
+} from '../Components/Utilities/Functions/NavigationUtil';
 import {COLORS} from '../constants';
 import AppIcon from '../Components/Utilities/AppIcon';
 import IMAGES from '../Components/IMAGES';
 
 const Profile = () => {
+  const demoApp = () => {
+    ToastAndroid.show('This is a demo app', ToastAndroid.CENTER);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -42,6 +49,7 @@ const Profile = () => {
               size={15}
               type="MaterialIcons"
               color="black"
+              style={{left: 2}}
             />
           </TouchableOpacity>
           <View
@@ -100,7 +108,7 @@ const Profile = () => {
               fontWeight: 'bold',
               color: COLORS.GRAYNEW1,
             }}>
-            Rakesh Kumar Rao
+            David
           </Text>
           <Text
             style={{
@@ -126,7 +134,10 @@ const Profile = () => {
               padding: 10,
               marginVertical: 20,
             }}>
-            <View
+            <TouchableOpacity
+              onPress={() => {
+                demoApp();
+              }}
               style={{
                 width: '100%',
                 alignItems: 'center',
@@ -166,9 +177,9 @@ const Profile = () => {
                 type="MaterialIcons"
                 color="black"
               />
-            </View>
+            </TouchableOpacity>
             <TouchableOpacity
-            onPress={() => navigate('Address')}
+              onPress={() => navigate('Address')}
               style={{
                 width: '100%',
                 alignItems: 'center',
@@ -218,7 +229,51 @@ const Profile = () => {
               padding: 10,
               marginVertical: 5,
             }}>
-            <View
+            <TouchableOpacity
+              onPress={() => {
+                navigate('MyOrder');
+              }}
+              style={{
+                width: '100%',
+                alignItems: 'center',
+                flexDirection: 'row',
+                marginVertical: 10,
+                marginHorizontal: 10,
+                justifyContent: 'space-between',
+              }}>
+              <View
+                style={{
+                  width: '90%',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  marginVertical: 10,
+                }}>
+                <AppIcon
+                  name="shoppingcart"
+                  size={22}
+                  type="AntDesign"
+                  color={'#81c0ff'}
+                />
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: '500',
+                    marginHorizontal: 10,
+                    color: COLORS.GRAYNEW1,
+                  }}>
+                  My Orders
+                </Text>
+              </View>
+
+              <AppIcon
+                name="chevron-right"
+                size={22}
+                style={{marginRight: 10}}
+                type="MaterialIcons"
+                color="black"
+              />
+            </TouchableOpacity>
+            {/* <View
               style={{
                 width: '100%',
                 alignItems: 'center',
@@ -258,8 +313,11 @@ const Profile = () => {
                 type="MaterialIcons"
                 color="black"
               />
-            </View>
-            <View
+            </View> */}
+            <TouchableOpacity
+              onPress={() => {
+                demoApp();
+              }}
               style={{
                 width: '100%',
                 alignItems: 'center',
@@ -299,8 +357,11 @@ const Profile = () => {
                 color="black"
                 style={{marginRight: 10}}
               />
-            </View>
-            <View
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                demoApp();
+              }}
               style={{
                 width: '100%',
                 alignItems: 'center',
@@ -340,8 +401,11 @@ const Profile = () => {
                 color="black"
                 style={{marginRight: 10}}
               />
-            </View>
-            <View
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                demoApp();
+              }}
               style={{
                 width: '100%',
                 alignItems: 'center',
@@ -381,7 +445,7 @@ const Profile = () => {
                 color="black"
                 style={{marginRight: 10}}
               />
-            </View>
+            </TouchableOpacity>
           </View>
 
           <View
@@ -401,7 +465,10 @@ const Profile = () => {
                 marginHorizontal: 10,
                 justifyContent: 'space-between',
               }}>
-              <View
+              <TouchableOpacity
+                onPress={() => {
+                  demoApp();
+                }}
                 style={{
                   width: '90%',
                   alignItems: 'center',
@@ -423,7 +490,7 @@ const Profile = () => {
                   }}>
                   FAQs
                 </Text>
-              </View>
+              </TouchableOpacity>
 
               <AppIcon
                 name="chevron-right"
@@ -433,7 +500,10 @@ const Profile = () => {
                 color="black"
               />
             </View>
-            <View
+            <TouchableOpacity
+              onPress={() => {
+                demoApp();
+              }}
               style={{
                 width: '100%',
                 alignItems: 'center',
@@ -473,7 +543,7 @@ const Profile = () => {
                 color="black"
                 style={{marginRight: 10}}
               />
-            </View>
+            </TouchableOpacity>
             <View
               style={{
                 width: '100%',
@@ -483,7 +553,10 @@ const Profile = () => {
                 marginHorizontal: 10,
                 justifyContent: 'space-between',
               }}>
-              <View
+              <TouchableOpacity
+                onPress={() => {
+                  demoApp();
+                }}
                 style={{
                   width: '90%',
                   alignItems: 'center',
@@ -505,7 +578,7 @@ const Profile = () => {
                   }}>
                   Settings
                 </Text>
-              </View>
+              </TouchableOpacity>
 
               <AppIcon
                 name="chevron-right"
@@ -516,7 +589,7 @@ const Profile = () => {
               />
             </View>
           </View>
-          <View
+          {/* <View
             style={{
               width: '100%',
               borderRadius: 15,
@@ -553,7 +626,7 @@ const Profile = () => {
                     marginHorizontal: 10,
                     color: COLORS.GRAYNEW1,
                   }}>
-                Log Out
+                  Log Out
                 </Text>
               </View>
 
@@ -565,10 +638,7 @@ const Profile = () => {
                 color="black"
               />
             </View>
-          
-          </View>
-        
-          
+          </View> */}
         </ScrollView>
       </View>
     </SafeAreaView>
