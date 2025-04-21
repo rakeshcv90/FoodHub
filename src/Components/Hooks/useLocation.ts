@@ -16,21 +16,26 @@ export const useLocation = () => {
       PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION,
       PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
     ],
-    ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+    // ios: PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+    ios: [
+      PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+      PERMISSIONS.IOS.LOCATION_ALWAYS,
+    ],
   };
 
   //check
   const checkLocationPermission = async () => {
     const result = PLATFORM_IOS
-      ? await check(methods.ios)
-      : await checkMultiple(methods.android);
+    ? await checkMultiple(methods.ios)
+    : await checkMultiple(methods.android);
+
     return Result(result);
   };
   //ask
   const askLocationPermission = async () => {
     const result = PLATFORM_IOS
-      ? await request(methods.ios)
-      : await requestMultiple(methods.android);
+    ? await requestMultiple(methods.ios)
+    : await requestMultiple(methods.android);
     return Result(result);
   };
 

@@ -1,25 +1,68 @@
+
 require File.join(File.dirname(`node --print "require.resolve('expo/package.json')"`), "scripts/autolinking")
-# Resolve react_native_pods.rb with node to allow for hoisting
-require Pod::Executable.execute_command('node', ['-p',
-  'require.resolve(
-    "react-native/scripts/react_native_pods.rb",
-    {paths: [process.argv[1]]},
-  )', __dir__]).strip
 
-platform :ios, min_ios_version_supported
-prepare_react_native_project!
 
-linkage = ENV['USE_FRAMEWORKS']
-if linkage != nil
-  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
-  use_frameworks! :linkage => linkage.to_sym
+def node_require(script)
+  require Pod::Executable.execute_command('node', ['-p',
+    "require.resolve(
+      '#{script}',
+      {paths: [process.argv[1]]},
+    )", __dir__]).strip
 end
 
-target 'FoodHub' do
-  use_expo_modules!
+node_require('react-native/scripts/react_native_pods.rb')
+node_require('react-native-permissions/scripts/setup.rb')
 
+
+platform :ios, '15.1'
+
+use_frameworks! :linkage => :static 
+
+prepare_react_native_project!
+setup_permissions([
+  'AppTrackingTransparency',
+  'Bluetooth',
+  'Calendars',
+  'CalendarsWriteOnly',
+  'Camera',
+  'Contacts',
+  'FaceID',
+  'LocationAccuracy',
+  'LocationAlways',
+  'LocationWhenInUse',
+  'MediaLibrary',
+  'Microphone',
+  'Motion',
+  'Notifications',
+  'PhotoLibrary',
+  'PhotoLibraryAddOnly',
+  'Reminders',
+  'Siri',
+  'SpeechRecognition',
+  'StoreKit',
+])
+
+
+
+target 'FoodHub' do
+  use_expo_modules! # Setup expo modules
+  pod 'gRPC-C++', '~> 1.65.0'
+  pod 'gRPC-Core', '~> 1.65.0'
+  pod 'Firebase/CoreOnly', '11.8.0'
+  pod 'FirebaseFirestore', '11.8.0'
+  
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils'
+  rn_maps_path = '../node_modules/react-native-maps'
+    pod 'react-native-google-maps', :path => rn_maps_path
+
+  # Autolinking configuration for react-native
   if ENV['EXPO_USE_COMMUNITY_AUTOLINKING'] == '1'
-    config_command = ['node', '-e', "process.argv=['', '', 'config'];require('@react-native-community/cli').run()"];
+    config_command = [
+      'node',
+      '-e',
+      "process.argv=['', '', 'config'];require('@react-native-community/cli').run()"
+    ]
   else
     config_command = [
       'node',
@@ -32,40 +75,32 @@ target 'FoodHub' do
       'ios'
     ]
   end
-# React Native Maps dependencies
 
-rn_maps_path = '../node_modules/react-native-maps'
-pod 'react-native-google-maps', :path => rn_maps_path
+  # Include react-native-maps with Google Maps support
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
+
+  # Use React Native dependencies
   config = use_native_modules!(config_command)
 
   use_react_native!(
     :path => config[:reactNativePath],
-    # An absolute path to your application root.
+    # Absolute path to your application root
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
-  use_frameworks! :linkage => :static 
-  $RNFirebaseAsStaticFramework = true
+
+  # Tests target
   target 'FoodHubTests' do
     inherit! :complete
-    # Pods for testing
   end
 
+  # Post-install configurations
   post_install do |installer|
-    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
+    # React Native post-install setup
     react_native_post_install(
       installer,
       config[:reactNativePath],
       :mac_catalyst_enabled => false,
-      # :ccache_enabled => true
     )
-    installer.pods_project.targets.each do |target|
-      # Prevent duplicate copy commands
-      target.build_configurations.each do |config|
-        if target.name.start_with?('ReactCommon', 'React-Fabric', 'React-FabricComponents')
-          config.build_settings['EXCLUDED_SOURCE_FILE_NAMES'] = 'CallbackWrapper.h conversions.h LongLivedObject.h primitives.h propsConversions.h RCTComponentViewHelpers.h CallbackWrapper.h LongLivedObject.h conversions.h primitives.h propsConversions.h RCTComponentViewHelpers.h conversions.h primitives.h'
-        end
-      end
-    end
   end
-
 end

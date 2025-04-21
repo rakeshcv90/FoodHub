@@ -138,7 +138,7 @@ const MyAddress = () => {
         }}>
         <MapView
           ref={mapRef}
-          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+          //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
           style={[, StyleSheet.absoluteFill]}
           pitchEnabled={false}
           key={GOOGLE_API}

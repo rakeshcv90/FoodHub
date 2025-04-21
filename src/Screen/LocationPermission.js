@@ -57,6 +57,7 @@ const LocationPermission = () => {
 
   const grantButton = async () => {
     const permission = await askLocationPermission();
+    console.log("XCvxcvxcvxcvxcvxcvxcvxcvxcvxcvxcvxcvxcvxcvxcvxcv", permission);
     if (permission == 'granted') {
       setOpen(false);
       // setResetCurrent(true);

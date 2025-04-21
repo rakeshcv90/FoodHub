@@ -144,13 +144,13 @@ const Checkout = ({route}) => {
       <View
         style={{
           width: '100%',
-          height: 100,
-          position: 'absolute',
+          // height: 100,
+          // position: 'absolute',
           top: 300,
           bottom: 0,
           alignItems: 'center',
           justifyContent: 'center',
-
+    
           zIndex: 1,
         }}>
         {loading && <ActivityIndicator size="large" color="#000000" />}
@@ -159,11 +159,22 @@ const Checkout = ({route}) => {
       <View style={styles.section}>
         <View style={{padding: 15}}>
           <Text style={styles.sectionTitle}>Shipping Address</Text>
-          <Text style={{color: COLORS.BLACK, fontWeight: '400', fontSize: 17,marginHorizontal:10}}>
-            
+          <Text
+            style={{
+              color: COLORS.BLACK,
+              fontWeight: '400',
+              fontSize: 17,
+              marginHorizontal: 10,
+            }}>
             {getMyAddress[getMyDefaultAddress]?.type}
           </Text>
-          <Text style={{color: COLORS.BLACK, fontWeight: '400', fontSize: 17,marginHorizontal:13}}>
+          <Text
+            style={{
+              color: COLORS.BLACK,
+              fontWeight: '400',
+              fontSize: 17,
+              marginHorizontal: 13,
+            }}>
             {getMyAddress[getMyDefaultAddress]?.address}
             {getMyAddress[getMyDefaultAddress]?.pin}
           </Text>
@@ -177,14 +188,11 @@ const Checkout = ({route}) => {
             size={30}
             type="MaterialIcons"
             color="black"
-            style={{right:15}}
+            style={{right: 15}}
           />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.section}
-        // onPress={() => navigate('Payment', {fromCheckoutScreen: true})}
-      >
+      <TouchableOpacity style={styles.section}>
         <View style={{padding: 15}}>
           <Text style={styles.sectionTitle}>Payment Method</Text>
           {paymentType?.name == '' ? (
@@ -193,7 +201,12 @@ const Checkout = ({route}) => {
               Add Payment
             </Text>
           ) : (
-            <View style={{flexDirection: 'row', alignItems: 'center',marginHorizontal:10}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginHorizontal: 10,
+              }}>
               <Text
                 style={{
                   marginRight: 10,
@@ -217,7 +230,7 @@ const Checkout = ({route}) => {
             size={30}
             type="MaterialIcons"
             color="black"
-            style={{right:5}}
+            style={{right: 5}}
           />
         </TouchableOpacity>
       </TouchableOpacity>

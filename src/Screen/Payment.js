@@ -136,7 +136,7 @@ const Payment = ({route}) => {
             titleText="DONE"
             bR={10}
             mV={15}
-            w={'80%'}
+            w={'100%'}
           />
         </View>
       </View>
